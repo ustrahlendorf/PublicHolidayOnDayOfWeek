@@ -1,0 +1,10 @@
+Description: AWS development standards
+Pattern: **/src/**/*.py
+
+AWS development requirements:
+- Use IAM roles for authentication
+- No hardcoded credentials
+- Use AWS Secrets Manager or Parameter Store
+- Use session objects for AWS clients
+- Mock AWS services in tests using moto
+- Use Infrastructure as Code (Terraform/CDK) 

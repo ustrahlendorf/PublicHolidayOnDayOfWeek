@@ -1,0 +1,14 @@
+Description: Testing requirements and configuration
+Pattern: **/tests/**/*.py
+
+Testing standards:
+- Use pytest as the test framework
+- Write tests before implementation (TDD)
+- Maintain high test coverage
+- Mock external services
+- Use fixtures for test setup
+
+Settings:
+python.testing.pytestEnabled = true
+python.testing.autoTestDiscoverOnSaveEnabled = true
+python.testing.pytestArgs = ["-v", "--cov"] 

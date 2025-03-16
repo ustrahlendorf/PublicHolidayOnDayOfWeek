@@ -1,0 +1,15 @@
+Description: Python code style and formatting rules
+Pattern: **/*.py
+
+The following code style rules must be enforced:
+- Use Black formatter with line length of 88 characters
+- Use Flake8 for linting
+- Sort imports using isort with Black compatibility
+- Follow PEP 8 style guidelines
+
+Settings:
+python.formatting.provider = black
+python.formatting.blackArgs = ["--line-length", "88"]
+python.linting.flake8Enabled = true
+python.linting.flake8Args = ["--max-line-length", "88", "--extend-ignore", "E203"]
+python.sortImports.args = ["--profile", "black", "--line-length", "88"] 

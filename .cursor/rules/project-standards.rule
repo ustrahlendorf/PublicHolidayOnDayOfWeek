@@ -1,0 +1,11 @@
+Description: General project standards and architecture
+Pattern: **/*
+
+Project requirements:
+- Follow standard Python project structure
+- Use virtual environments for dependency management
+- Implement proper logging with CloudWatch integration
+- Use async processing where appropriate
+- Implement proper state management
+- Follow step-by-step development approach
+- Ensure CI/CD pipeline validation 
