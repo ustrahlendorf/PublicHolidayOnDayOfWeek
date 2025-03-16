@@ -12,7 +12,7 @@ A Python application for analyzing the distribution of German public holidays ac
 
 ## Screenshot
 
-![Public Holiday Analyzer Web Interface](PublicHolidayOnDayOfWeek/images/HomeFeiertagsanalyse.png)
+![Public Holiday Analyzer Web Interface](images/HomeFeiertagsanalyse.png)
 
 ## Web Interface
 
