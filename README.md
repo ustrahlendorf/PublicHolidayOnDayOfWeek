@@ -10,6 +10,10 @@ A Python application for analyzing the distribution of German public holidays ac
 - Modern web interface built with Taipy
 - Use as a Python package in your own projects
 
+## Screenshot
+
+![Public Holiday Analyzer Web Interface](PublicHolidayOnDayOfWeek/images/HomeFeiertagsanalyse.png)
+
 ## Web Interface
 
 1. Start the web interface:
