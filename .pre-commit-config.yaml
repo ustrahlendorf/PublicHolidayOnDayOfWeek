@@ -1,0 +1,19 @@
+repos:
+  - repo: https://github.com/psf/black
+    rev: stable
+    hooks:
+      - id: black
+        language_version: python3
+  - repo: https://github.com/PyCQA/flake8
+    rev: 6.1.0
+    hooks:
+      - id: flake8
+        additional_dependencies: ["flake8-bugbear"]
+  - repo: local
+    hooks:
+      - id: check-aws-credentials
+        name: Check for AWS Credentials
+        entry: grep -r -E '(AWS_ACCESS_KEY_ID|AWS_SECRET_ACCESS_KEY)=' .
+        language: system
+        types: [text]
+        fail_fast: true
