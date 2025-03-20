@@ -1,0 +1,77 @@
+---
+description: 
+globs: **/*.tf
+alwaysApply: false
+---
+# Terraform Best Practices Rules
+
+ENFORCE:
+- style=hashicorp    # Follow HashiCorp style guide
+- security=high      # Strict security checks
+- state=validate     # Validate state management
+- naming=consistent  # Enforce naming conventions
+
+CHECK:
+- iam=strict        # Strict IAM policy validation
+- costs=optimize    # Look for cost optimization opportunities
+- modules=reusable  # Ensure modules are reusable
+
+VALIDATE:
+- providers=pinned  # Ensure provider versions are pinned
+- backend=secure    # Validate backend configuration
+- resources=tagged  # Check resource tagging
+
+# Infrastructure Security
+- Ensure all resources have appropriate tags for tracking and organization
+- Use data encryption at rest for sensitive resources
+- Implement least privilege access in IAM policies
+- Avoid hardcoding sensitive values, use variables or secrets management
+- Enable versioning on state storage buckets
+- Use state locking to prevent concurrent modifications
+
+# Code Organization
+- Use consistent naming conventions for resources (snake_case)
+- Organize resources into logical modules
+- Keep modules focused and single-purpose
+- Use workspaces for environment separation
+- Maintain a clear directory structure (modules/, environments/, etc.)
+- Document all variables and outputs
+
+# Performance & Cost
+- Use appropriate instance sizes and resource types
+- Implement auto-scaling where applicable
+- Tag resources for cost tracking
+- Clean up unused resources
+- Use spot instances where appropriate
+- Consider reserved instances for stable workloads
+
+# Version Control
+- Pin provider versions for stability
+- Use terraform.required_version to specify Terraform version
+- Document provider requirements
+- Use consistent formatting (terraform fmt)
+- Include backend configuration in code
+
+# Testing & Validation
+- Implement terraform plan in CI/CD pipelines
+- Use terraform validate for syntax checking
+- Test modules with different input combinations
+- Document expected outcomes
+- Include example configurations
+- Use checkov or tflint for security scanning
+
+# State Management
+- Use remote state storage
+- Implement state locking
+- Separate state by environment
+- Back up state files regularly
+- Document state dependencies
+- Use data sources instead of remote state where possible
+
+# Error Handling
+- Include proper error messages in outputs
+- Handle resource dependencies explicitly
+- Use count or for_each instead of duplicating resources
+- Implement proper timeout values
+- Include retry logic where appropriate
+- Handle null/empty values in variables
