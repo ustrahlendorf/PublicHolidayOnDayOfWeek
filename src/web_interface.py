@@ -2,10 +2,9 @@
 
 from datetime import datetime
 import pandas as pd
-from taipy.gui import Gui
-from taipy.gui.state import State
+from taipy.gui import Gui, State
 from taipy.gui.gui_actions import notify
-import socket
+from public_holiday_analyzer import analyze_holidays
 
 # Create initial static data
 initial_data = {
@@ -18,24 +17,12 @@ initial_data = {
 holiday_df = pd.DataFrame(initial_data)
 selected_year = str(datetime.now().year)
 
-def find_free_port(start_port=5000, max_port=5010):
-    """Find a free port between start_port and max_port."""
-    for port in range(start_port, max_port + 1):
-        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-            try:
-                s.bind(('', port))
-                return port
-            except OSError:
-                continue
-    raise RuntimeError(f"No free ports found between {start_port} and {max_port}")
-
-def update_holiday_data(state: State):
+def update_holiday_data(state: State) -> bool:
     """Update the holiday data table for the given year."""
     try:
         year = int(state.selected_year)
         if 2024 <= year <= 2050:
             # Analyze holidays for the specified year
-            from public_holiday_analyzer import analyze_holidays
             holiday_counts = analyze_holidays([year])
             
             # Calculate total holidays per weekday and collect holiday names
@@ -60,8 +47,9 @@ def update_holiday_data(state: State):
     except Exception as e:
         print(f"Error updating holiday data: {e}")
         return False
+    return False  # Return False if year is not in valid range
 
-def on_year_change(state: State):
+def on_year_change(state: State) -> None:
     """Handle year change event."""
     try:
         year = int(state.selected_year)
@@ -78,6 +66,8 @@ def on_year_change(state: State):
 
 # Define the page content with proper Taipy syntax
 page = """
+<|layout|columns=1|
+<|part|class_name=content-container|
 # 🎉 Deutscher Feiertagsanalysator
 
 ## Feiertagsverteilung nach Wochentag
@@ -97,17 +87,31 @@ page = """
 |>
 |>
 |>
+|>
+|>
 
 <style>
+.content-container {
+    padding: 20px;
+    margin: 0 auto;
+    max-width: 1200px;
+}
 .table-container {
     width: 100%;
     margin-left: 20px;
     margin-right: 20px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 .input-container {
     margin-left: 40px;
     margin-top: 0px;
-    padding-top: 20px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 .input-stack {
     display: flex;
@@ -119,7 +123,7 @@ page = """
     width: 100px;
     background-color: white !important;
     color: black !important;
-    border: none !important;
+    border: 1px solid #ccc !important;
     outline: none !important;
     border-radius: 4px !important;
 }
@@ -148,6 +152,14 @@ page = """
     background-color: #ff0000 !important;
     color: white !important;
     width: fit-content;
+    padding: 10px 20px !important;
+    border-radius: 4px !important;
+    border: none !important;
+    cursor: pointer !important;
+    transition: background-color 0.3s ease !important;
+}
+.analyze-button:hover {
+    background-color: #cc0000 !important;
 }
 .label {
     margin-bottom: 5px;
@@ -156,10 +168,11 @@ page = """
 """
 
 if __name__ == "__main__":
-    # Find an available port
-    port = find_free_port()
-    print(f"Starting server on port {port}")
-    
-    # Create GUI
+    # Create and run the GUI
     gui = Gui(page)
-    gui.run(port=port, dark_mode=False) 
+    gui.run(
+        port=8050,
+        dark_mode=False,
+        debug=True,
+        title="Feiertagsanalyse"
+    ) 
